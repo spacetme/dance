@@ -1,0 +1,26 @@
+{
+  "name": "idf",
+  "version": "0.0.0",
+  "authors": [
+    "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>"
+  ],
+  "description": "Instant Dancefloor",
+  "license": "MIT",
+  "homepage": "http://dance.spacet.me/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "q": "~1",
+    "bacon": "~0.7.10",
+    "jquery": "~2.1.0",
+    "lodash": "~2.4.1",
+    "bacon.jquery": "~0.4.7",
+    "bacon.model": "~0.1.6"
+  }
+}

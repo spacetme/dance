@@ -1,0 +1,117 @@
+
+$body-bg: #151413;
+$text-color: #e9e8e7;
+$link-color: #eeb;
+
+$btn-default-bg: #353433;
+$btn-default-color: #e9e8e7;
+$btn-default-border: #8b8685;
+$hr-border: #8b8685;
+$table-border-color: #8b8685;
+
+$input-bg: #090807;
+$input-border: #8b8685;
+$input-color: #eba;
+$glow: #59f;
+$input-group-addon-bg: #070605;
+
+@import "bootstrap";
+
+h2 {
+  font-size: 1.5em;
+  color: #aba6a5;
+}
+
+.loading-container {
+
+  position: relative;
+  z-index: 1;
+
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2000px;
+    background: $body-bg;
+  }
+  
+}
+
+.options-pane {
+  @extend .form-horizontal;
+  @extend .well;
+  .options-row {
+    @extend .form-group;
+  }
+  .options-label {
+    @extend .control-label;
+    @extend .col-sm-3;
+  }
+  .options-control {
+  }
+  background: #090807;
+  border-color: #454443;
+  border-width: 2px;
+}
+
+#music-audio {
+  width: 98%;
+  margin-bottom: 1em;
+}
+
+#playback-bar-display {
+  width: 80%;
+  margin: 0 auto;
+  td {
+    background: $body-bg;
+    text-align: center;
+  }
+  td.active {
+    background: #246;
+  }
+  td.queued {
+    background: #663;
+  }
+}
+
+#visualizer {
+  position: relative;
+  height: 700px;
+  .go-left, .go-right {
+    .item {
+      position: absolute;
+      width: 192px;
+      height: 32px;
+      background: #333;
+      top: 50%;
+      left: 50%;
+      &.active {
+        background: #ccc;
+        z-index: 1;
+        &.item1, &.item2, &.item3, &.item4 { background: #f00; }
+        &.item5, &.item6, &.item7, &.item8 { background: #ff0; }
+        &.item9, &.item10 { background: #0f0; }
+      }
+    }
+  }
+  .go-center {
+    .item {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 9px solid #333;
+      transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      border-radius: 400px;
+      &.active {
+        border-color: #ccc;
+        z-index: 1;
+        &.item1, &.item2, &.item3, &.item4 { border-color: #0ff; }
+        &.item5, &.item6, &.item7, &.item8 { border-color: #06f; }
+        &.item9, &.item10 { border-color: #f06; }
+      }
+    }
+  }
+}
+
