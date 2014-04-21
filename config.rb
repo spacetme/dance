@@ -70,3 +70,7 @@ end
 ready do
   sprockets.append_path File.join root, 'bower_components'
 end
+activate :deploy do |deploy|
+  deploy.build_before = true
+  deploy.method = :git
+end

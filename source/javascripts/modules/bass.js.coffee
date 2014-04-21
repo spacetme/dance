@@ -16,12 +16,12 @@ app.define 'bass', (require, context) ->
       sawtooth1 = audio.createOscillator()
       sawtooth1.type = 'sawtooth'
       sawtooth1.frequency.value = 110
-      sawtooth1.start()
+      sawtooth1.start(0)
 
       sine = audio.createOscillator()
       sine.type = 'sine'
       sine.frequency.value = 55
-      sine.start()
+      sine.start(0)
 
       lowpass = audio.createBiquadFilter()
       lowpass.type = 'lowpass'
