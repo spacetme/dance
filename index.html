@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Instant Dancefloor</title>
+    
+    <link href="/stylesheets/all.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  
+  <body class="index">
+
+<div class="container">
+
+  <h1>Instant Dancefloor</h1>
+
+  <div class="loading-container">
+    <div id="loading" class="loading">
+      <h2>Loading...</h2>
+      <div class="progress progress-striped">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="music-file">
+    <h2>Import Music</h2>
+    <div class="options-pane">
+      <div class="options-row">
+        <label class="options-label">File name</label>
+        <div class="options-control col-sm-5">
+          <input type="file" id="music-file" class="form-control">
+        </div>
+      </div>
+      <div class="options-row">
+        <label class="options-label">BPM</label>
+        <div class="options-control col-sm-2">
+          <input type="text" value="" id="music-bpm" class="form-control">
+        </div>
+        <div class="options-control col-sm-2">
+          <!--button class="btn btn-block btn-default" id="music-tap">Tap</button-->
+        </div>
+      </div>
+      <div class="options-row">
+        <p class="col-sm-offset-3 col-sm-6 help-block">Music will be adjusted to 160 BPM</p>
+      </div>
+      <hr>
+      <div class="text-center">
+        <audio id="music-audio" controls></audio>
+      </div>
+      <div class="options-row">
+        <label class="options-label">Cutoff Frequency</label>
+        <div class="options-control col-sm-6">
+          <input type="range" min="0" max="3000" value="300" class="form-control" id="music-cutoff">
+        </div>
+        <div class="col-sm-3">
+          <p class="form-control-static">
+            (<span id="music-cutoff-display"></span> Hz)
+          </p>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-default" id="music-slower">Slower</button>
+        [<span id="music-speed"></span>%]
+        <button class="btn btn-default" id="music-faster">Faster</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-sequencer">
+    <h2>Dance Beat <small id="playback-time"></small></h2>
+    <div class="options-pane">
+      <div class="text-center">
+        <button class="btn btn-primary" id="playback-start">Start [G]</button>
+        <button class="btn btn-danger" id="playback-stop">Stop [H]</button>
+      </div>
+      <br>
+      <table class="table table-bordered" id="playback-bar-display">
+        <tr></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="step-sequencer">
+    <h2>Bassline</h2>
+    <div class="options-pane">
+      <p class="pull-left">Key</p>
+      <div class="text-center" id="bass-key"></div>
+      <br>
+      <p class="pull-left">Bass</p>
+      <div class="text-center" id="bass-note"></div>
+    </div>
+  </div>
+
+  <h2>Visualizer</h2>
+
+</div>
+
+<div id="visualizer">
+  <div class="go-left"></div>
+  <div class="go-right"></div>
+  <div class="go-center"></div>
+</div>
+
+
+<script src="/javascripts/deps.js" type="text/javascript"></script>
+<script src="/javascripts/all.js" type="text/javascript"></script><script>
+  var theApp = app.create()
+  theApp.require('main').main()
+</script>
+
+  </body>
+
+</html>
+
