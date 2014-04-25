@@ -2,6 +2,8 @@
 app.define 'bpm_controller', (require) ->
 
   keys = require('keys')
+  playback = require('playback')
+  player = require('player')
 
   controller = { }
   controller.active = new Bacon.Model(false)
@@ -31,7 +33,7 @@ app.define 'bpm_controller', (require) ->
         count += weight
       return {
         bpm: Math.round(60 / (sum / count))
-        progress: Math.min(1, times / 48)
+        progress: Math.min(1, times / 49)
       }
 
   bpmText = (text) ->
@@ -51,6 +53,8 @@ app.define 'bpm_controller', (require) ->
         controller.bpm.push(s.bpm)
       if s.progress >= 1
         controller.active.set(false)
+        player.queue.set(1)
+        playback.start()
     return ->
       fn() for fn in unsub
 

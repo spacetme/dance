@@ -12,11 +12,17 @@ app.define 'player', (require, context) ->
   player.position = positionBus.toProperty([0, 0])
     .skipDuplicates(_.isEqual)
 
+  dequeue = ->
+    value = player.queue.get()
+    if value?
+      player.queue.set(null)
+    value
+
   class Machine
 
     constructor: (@patterns, @playlist) ->
       @current = -1
-      @item = 0
+      @item = -1
       @index = 0
 
     advanceAndPlay: (number, delay) ->
@@ -32,6 +38,7 @@ app.define 'player', (require, context) ->
     _next: (play, delay) ->
 
       # check item, just to be sure
+      @item = (dequeue() || 0) if @item < 0
       @item = 0 if @item >= @playlist.length
 
       # find the patterns to play
@@ -48,10 +55,9 @@ app.define 'player', (require, context) ->
 
       if finishedAll
         @index = 0
-        queued = player.queue.get()
-        if queued?
-          @item = queued
-          player.queue.set(null)
+        next = dequeue()
+        if next?
+          @item = next
         else
           @item += 1
       else
