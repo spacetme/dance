@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald|Audiowide);
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 /* line 9, /Users/dttvb/.rvm/gems/ruby-2.0.0-p0/gems/bootstrap-sass-3.1.0.2/vendor/assets/stylesheets/bootstrap/_normalize.scss */
 html {
@@ -5512,7 +5513,7 @@ a.list-group-item-danger {
     border-bottom-color: #ebccd1; }
 
 /* line 7, /Users/dttvb/.rvm/gems/ruby-2.0.0-p0/gems/bootstrap-sass-3.1.0.2/vendor/assets/stylesheets/bootstrap/_wells.scss */
-.well, .options-pane {
+.well, .options-pane, .tap-bpm {
   min-height: 20px;
   padding: 19px;
   margin-bottom: 20px;
@@ -5522,7 +5523,7 @@ a.list-group-item-danger {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05); }
   /* line 15, /Users/dttvb/.rvm/gems/ruby-2.0.0-p0/gems/bootstrap-sass-3.1.0.2/vendor/assets/stylesheets/bootstrap/_wells.scss */
-  .well blockquote, .options-pane blockquote {
+  .well blockquote, .options-pane blockquote, .tap-bpm blockquote {
     border-color: #ddd;
     border-color: rgba(0, 0, 0, 0.15); }
 
@@ -6272,16 +6273,16 @@ button.close {
   /* line 649, /Users/dttvb/.rvm/gems/ruby-2.0.0-p0/gems/bootstrap-sass-3.1.0.2/vendor/assets/stylesheets/bootstrap/_mixins.scss */
   .hidden-print {
     display: none !important; } }
-/* line 20, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 22, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 h2 {
   font-size: 1.5em;
   color: #aba6a5; }
 
-/* line 25, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 27, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 .loading-container {
   position: relative;
   z-index: 1; }
-  /* line 30, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 32, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   .loading-container .loading {
     position: absolute;
     top: 0;
@@ -6290,37 +6291,37 @@ h2 {
     height: 2000px;
     background: #151413; }
 
-/* line 41, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 43, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 .options-pane {
   background: #090807;
   border-color: #454443;
   border-width: 2px; }
 
-/* line 58, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 60, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 #music-audio {
   width: 98%;
   margin-bottom: 1em; }
 
-/* line 63, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 65, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 #playback-bar-display {
   width: 80%;
   margin: 0 auto; }
-  /* line 66, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 68, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   #playback-bar-display td {
     background: #151413;
     text-align: center; }
-  /* line 70, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 72, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   #playback-bar-display td.active {
     background: #246; }
-  /* line 73, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 75, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   #playback-bar-display td.queued {
     background: #663; }
 
-/* line 78, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+/* line 80, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
 #visualizer {
   position: relative;
   height: 700px; }
-  /* line 82, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 84, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   #visualizer .go-left .item, #visualizer .go-right .item {
     position: absolute;
     width: 192px;
@@ -6328,20 +6329,20 @@ h2 {
     background: #333;
     top: 50%;
     left: 50%; }
-    /* line 89, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+    /* line 91, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
     #visualizer .go-left .item.active, #visualizer .go-right .item.active {
       background: #ccc;
       z-index: 1; }
-      /* line 92, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 94, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-left .item.active.item1, #visualizer .go-left .item.active.item2, #visualizer .go-left .item.active.item3, #visualizer .go-left .item.active.item4, #visualizer .go-right .item.active.item1, #visualizer .go-right .item.active.item2, #visualizer .go-right .item.active.item3, #visualizer .go-right .item.active.item4 {
         background: #f00; }
-      /* line 93, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 95, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-left .item.active.item5, #visualizer .go-left .item.active.item6, #visualizer .go-left .item.active.item7, #visualizer .go-left .item.active.item8, #visualizer .go-right .item.active.item5, #visualizer .go-right .item.active.item6, #visualizer .go-right .item.active.item7, #visualizer .go-right .item.active.item8 {
         background: #ff0; }
-      /* line 94, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 96, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-left .item.active.item9, #visualizer .go-left .item.active.item10, #visualizer .go-right .item.active.item9, #visualizer .go-right .item.active.item10 {
         background: #0f0; }
-  /* line 99, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  /* line 101, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
   #visualizer .go-center .item {
     position: absolute;
     top: 50%;
@@ -6350,16 +6351,38 @@ h2 {
     transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     border-radius: 400px; }
-    /* line 107, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+    /* line 109, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
     #visualizer .go-center .item.active {
       border-color: #ccc;
       z-index: 1; }
-      /* line 110, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 112, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-center .item.active.item1, #visualizer .go-center .item.active.item2, #visualizer .go-center .item.active.item3, #visualizer .go-center .item.active.item4 {
         border-color: #0ff; }
-      /* line 111, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 113, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-center .item.active.item5, #visualizer .go-center .item.active.item6, #visualizer .go-center .item.active.item7, #visualizer .go-center .item.active.item8 {
         border-color: #06f; }
-      /* line 112, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+      /* line 114, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
       #visualizer .go-center .item.active.item9, #visualizer .go-center .item.active.item10 {
         border-color: #f06; }
+
+/* line 121, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+.tap-bpm {
+  background: #252423;
+  border: 1px solid #353433; }
+  /* line 125, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  .tap-bpm p {
+    text-align: center;
+    font: 24px Oswald;
+    letter-spacing: 0.1ex;
+    color: rgba(255, 255, 255, 0.4); }
+  /* line 131, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  .tap-bpm .tap {
+    font: 96px Audiowide;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4); }
+  /* line 136, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  .tap-bpm:focus .tap {
+    color: white; }
+  /* line 139, /Users/dttvb/Projects/dance.spacet.me/source/stylesheets/all.css.scss */
+  .tap-bpm .progress {
+    background: #151413; }

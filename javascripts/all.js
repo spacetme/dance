@@ -279,6 +279,99 @@
 
 }).call(this);
 (function() {
+  app.define('bpm_controller', function(require) {
+    var bpmText, controller, createInstance, createTapBpm, instance, keys, percentage;
+    keys = require('keys');
+    controller = {};
+    controller.active = new Bacon.Model(false);
+    controller.bpm = new Bacon.Bus();
+    controller.start = function() {
+      $('#music-tap').on('click', function() {
+        return controller.active.set(!controller.active.get());
+      });
+      return controller.active.onValue($('#music-bpm'), 'prop', 'disabled');
+    };
+    instance = null;
+    createTapBpm = function() {
+      var count, data, sum, times;
+      data = [];
+      sum = 0;
+      count = 0;
+      times = 0;
+      return function() {
+        var delta, i, last, weight, _i;
+        data.push(new Date().getTime() / 1000);
+        last = data.length - 1;
+        times += 1;
+        for (i = _i = 0; 0 <= last ? _i < last : _i > last; i = 0 <= last ? ++_i : --_i) {
+          weight = last - i;
+          delta = (data[last] - data[i]) / (last - i);
+          sum += delta * weight;
+          count += weight;
+        }
+        return {
+          bpm: Math.round(60 / (sum / count)),
+          progress: Math.min(1, times / 48)
+        };
+      };
+    };
+    bpmText = function(text) {
+      if (text) {
+        return text;
+      } else {
+        return "TAP";
+      }
+    };
+    percentage = function(v) {
+      return (v * 100).toFixed(2) + '%';
+    };
+    createInstance = function() {
+      var state, unsub;
+      state = keys.filter(function(k) {
+        return k === 13;
+      }).map(createTapBpm()).toProperty({
+        bpm: null,
+        progress: 0
+      });
+      unsub = [];
+      unsub.push(state.map('.bpm').map(bpmText).onValue($('#tap-bpm-tap'), 'text'));
+      unsub.push(state.map('.progress').map(percentage).onValue($('#tap-bpm .progress-bar'), 'width'));
+      unsub.push(state.onValue(function(s) {
+        if (s.bpm) {
+          controller.bpm.push(s.bpm);
+        }
+        if (s.progress >= 1) {
+          return controller.active.set(false);
+        }
+      }));
+      return function() {
+        var fn, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = unsub.length; _i < _len; _i++) {
+          fn = unsub[_i];
+          _results.push(fn());
+        }
+        return _results;
+      };
+    };
+    controller.active.onValue(function(active) {
+      if (active) {
+        $('#tap-bpm').slideDown();
+        instance = createInstance();
+        return $('#tap-bpm')[0].focus();
+      } else {
+        $('#tap-bpm').slideUp();
+        if (instance) {
+          instance();
+        }
+        return instance = null;
+      }
+    });
+    return controller;
+  });
+
+}).call(this);
+(function() {
   app.define('keys', function() {
     var keyEvents, keys;
     keyEvents = $(window).asEventStream('keydown').filter(function() {
@@ -425,7 +518,8 @@
           require('bass').start();
           require('transpose_controller').start();
           require('bass_controller').start();
-          return require('visualizer').start();
+          require('visualizer').start();
+          return require('bpm_controller').start();
         }).then(function() {
           var bass, patterns, player, playlist, resources;
           resources = require('resources');
@@ -550,7 +644,7 @@
     };
     return {
       start: function() {
-        var audio, cutoff, drift, file, filter, gain, master, media, musicBPM, ramp, rate, source;
+        var audio, bpmController, cutoff, drift, file, filter, gain, master, media, model, musicBPM, ramp, rate, source;
         media = $('#music-audio')[0];
         file = $('#music-file')[0];
         file.onchange = function() {
@@ -558,6 +652,7 @@
         };
         audio = require('audio');
         master = require('master');
+        bpmController = require('bpm_controller');
         source = audio.createMediaElementSource(media);
         filter = audio.createBiquadFilter();
         filter.type = 'highpass';
@@ -580,8 +675,16 @@
             return 1;
           })).toProperty(1);
         };
-        musicBPM = Bacon.$.textFieldValue($('#music-bpm'), '135').map(parseFloat);
-        rate = musicBPM.map(toPlaybackRate).combine(drift($('#music-faster')), function(rate, adjust) {
+        model = Bacon.$.textFieldValue($('#music-bpm'), '160');
+        model.addSource(bpmController.bpm);
+        musicBPM = model.map(parseFloat);
+        rate = musicBPM.map(toPlaybackRate).combine(bpmController.active, function(rate, active) {
+          if (active) {
+            return 1;
+          } else {
+            return rate;
+          }
+        }).combine(drift($('#music-faster')), function(rate, adjust) {
           return rate * adjust;
         }).combine(drift($('#music-slower')), function(rate, adjust) {
           return rate / adjust;
@@ -592,7 +695,13 @@
         rate.map(function(rate) {
           return (rate * 100).toFixed(2);
         }).onValue($('#music-speed'), 'text');
-        cutoff = Bacon.$.textFieldValue($('#music-cutoff'), '350').map(parseFloat);
+        cutoff = Bacon.$.textFieldValue($('#music-cutoff'), '350').map(parseFloat).combine(bpmController.active, function(value, active) {
+          if (active) {
+            return 0;
+          } else {
+            return value;
+          }
+        });
         cutoff.onValue(ramp(filter.frequency));
         return cutoff.onValue($('#music-cutoff-display'), 'text');
       }

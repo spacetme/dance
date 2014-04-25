@@ -60,7 +60,8 @@
           require('bass').start();
           require('transpose_controller').start();
           require('bass_controller').start();
-          return require('visualizer').start();
+          require('visualizer').start();
+          return require('bpm_controller').start();
         }).then(function() {
           var bass, patterns, player, playlist, resources;
           resources = require('resources');

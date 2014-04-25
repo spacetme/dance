@@ -10,7 +10,7 @@
     };
     return {
       start: function() {
-        var audio, cutoff, drift, file, filter, gain, master, media, musicBPM, ramp, rate, source;
+        var audio, bpmController, cutoff, drift, file, filter, gain, master, media, model, musicBPM, ramp, rate, source;
         media = $('#music-audio')[0];
         file = $('#music-file')[0];
         file.onchange = function() {
@@ -18,6 +18,7 @@
         };
         audio = require('audio');
         master = require('master');
+        bpmController = require('bpm_controller');
         source = audio.createMediaElementSource(media);
         filter = audio.createBiquadFilter();
         filter.type = 'highpass';
@@ -40,8 +41,16 @@
             return 1;
           })).toProperty(1);
         };
-        musicBPM = Bacon.$.textFieldValue($('#music-bpm'), '135').map(parseFloat);
-        rate = musicBPM.map(toPlaybackRate).combine(drift($('#music-faster')), function(rate, adjust) {
+        model = Bacon.$.textFieldValue($('#music-bpm'), '160');
+        model.addSource(bpmController.bpm);
+        musicBPM = model.map(parseFloat);
+        rate = musicBPM.map(toPlaybackRate).combine(bpmController.active, function(rate, active) {
+          if (active) {
+            return 1;
+          } else {
+            return rate;
+          }
+        }).combine(drift($('#music-faster')), function(rate, adjust) {
           return rate * adjust;
         }).combine(drift($('#music-slower')), function(rate, adjust) {
           return rate / adjust;
@@ -52,7 +61,13 @@
         rate.map(function(rate) {
           return (rate * 100).toFixed(2);
         }).onValue($('#music-speed'), 'text');
-        cutoff = Bacon.$.textFieldValue($('#music-cutoff'), '350').map(parseFloat);
+        cutoff = Bacon.$.textFieldValue($('#music-cutoff'), '350').map(parseFloat).combine(bpmController.active, function(value, active) {
+          if (active) {
+            return 0;
+          } else {
+            return value;
+          }
+        });
         cutoff.onValue(ramp(filter.frequency));
         return cutoff.onValue($('#music-cutoff-display'), 'text');
       }
