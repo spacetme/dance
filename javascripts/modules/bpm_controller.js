@@ -1,7 +1,9 @@
 (function() {
   app.define('bpm_controller', function(require) {
-    var bpmText, controller, createInstance, createTapBpm, instance, keys, percentage;
+    var bpmText, controller, createInstance, createTapBpm, instance, keys, percentage, playback, player;
     keys = require('keys');
+    playback = require('playback');
+    player = require('player');
     controller = {};
     controller.active = new Bacon.Model(false);
     controller.bpm = new Bacon.Bus();
@@ -31,7 +33,7 @@
         }
         return {
           bpm: Math.round(60 / (sum / count)),
-          progress: Math.min(1, times / 48)
+          progress: Math.min(1, times / 49)
         };
       };
     };
@@ -61,7 +63,9 @@
           controller.bpm.push(s.bpm);
         }
         if (s.progress >= 1) {
-          return controller.active.set(false);
+          controller.active.set(false);
+          player.queue.set(1);
+          return playback.start();
         }
       }));
       return function() {

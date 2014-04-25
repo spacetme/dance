@@ -1,17 +1,25 @@
 (function() {
   app.define('player', function(require, context) {
-    var Machine, player, positionBus;
+    var Machine, dequeue, player, positionBus;
     player = {};
     positionBus = new Bacon.Bus();
     player.events = new Bacon.Bus();
     player.queue = new Bacon.Model(null);
     player.position = positionBus.toProperty([0, 0]).skipDuplicates(_.isEqual);
+    dequeue = function() {
+      var value;
+      value = player.queue.get();
+      if (value != null) {
+        player.queue.set(null);
+      }
+      return value;
+    };
     Machine = (function() {
       function Machine(patterns, playlist) {
         this.patterns = patterns;
         this.playlist = playlist;
         this.current = -1;
-        this.item = 0;
+        this.item = -1;
         this.index = 0;
       }
 
@@ -32,7 +40,10 @@
       };
 
       Machine.prototype._next = function(play, delay) {
-        var finishedAll, pattern, patternName, patternsToPlay, queued, _i, _len;
+        var finishedAll, next, pattern, patternName, patternsToPlay, _i, _len;
+        if (this.item < 0) {
+          this.item = dequeue() || 0;
+        }
         if (this.item >= this.playlist.length) {
           this.item = 0;
         }
@@ -55,10 +66,9 @@
         }
         if (finishedAll) {
           this.index = 0;
-          queued = player.queue.get();
-          if (queued != null) {
-            this.item = queued;
-            return player.queue.set(null);
+          next = dequeue();
+          if (next != null) {
+            return this.item = next;
           } else {
             return this.item += 1;
           }
