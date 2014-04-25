@@ -20,6 +20,7 @@ app.define 'music_controller', (require) ->
     # connect the audio tag to the audio destination
     audio = require('audio')
     master = require('master')
+    bpmController = require('bpm_controller')
 
     source = audio.createMediaElementSource(media)
 
@@ -43,11 +44,15 @@ app.define 'music_controller', (require) ->
 
     # databindings:
     # bpm
-    musicBPM = Bacon.$.textFieldValue($('#music-bpm'), '135')
-      .map(parseFloat)
+    model = Bacon.$.textFieldValue($('#music-bpm'), '160')
+    model.addSource(bpmController.bpm)
+
+    musicBPM = model.map(parseFloat)
 
     rate = musicBPM
       .map(toPlaybackRate)
+      .combine(bpmController.active, (rate, active) ->
+        if active then 1 else rate)
       .combine(drift($('#music-faster')), (rate, adjust) -> rate * adjust)
       .combine(drift($('#music-slower')), (rate, adjust) -> rate / adjust)
       .log()
@@ -59,6 +64,8 @@ app.define 'music_controller', (require) ->
     # cutoff frequency
     cutoff = Bacon.$.textFieldValue($('#music-cutoff'), '350')
       .map(parseFloat)
+      .combine(bpmController.active, (value, active) ->
+        if active then 0 else value)
 
     cutoff.onValue(ramp(filter.frequency))
     cutoff.onValue($('#music-cutoff-display'), 'text')

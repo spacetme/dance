@@ -1,4 +1,6 @@
 
+@import url(http://fonts.googleapis.com/css?family=Oswald|Audiowide);
+
 $body-bg: #151413;
 $text-color: #e9e8e7;
 $link-color: #eeb;
@@ -114,4 +116,40 @@ h2 {
     }
   }
 }
+
+
+.tap-bpm {
+  @extend .well;
+  background: #252423;
+  border: 1px solid #353433;
+  p {
+    text-align: center;
+    font: 24px Oswald;
+    letter-spacing: 0.1ex;
+    color: rgba(white, 0.4);
+  }
+  .tap {
+    font: 96px Audiowide;
+    text-align: center;
+    color: rgba(white, 0.4);
+  }
+  &:focus .tap {
+    color: rgba(white, 1);
+  }
+  .progress {
+    background: #151413;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

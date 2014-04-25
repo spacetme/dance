@@ -42,6 +42,7 @@ app.define 'main', (require, context) ->
       require('transpose_controller').start()
       require('bass_controller').start()
       require('visualizer').start()
+      require('bpm_controller').start()
     .then ->
 
       resources = require('resources')
